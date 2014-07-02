@@ -1,0 +1,3 @@
+cocoders_payroll_add_hourly:
+    path:     /add/hourly
+    defaults: { _controller: cocoders_payroll.add_hourly_employee_controller:AddAction }

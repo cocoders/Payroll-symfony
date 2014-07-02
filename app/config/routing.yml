@@ -1,0 +1,4 @@
+cocoders_payroll:
+    resource: "@CocodersPayrollBundle/Resources/config/routing.yml"
+    prefix:   /
+

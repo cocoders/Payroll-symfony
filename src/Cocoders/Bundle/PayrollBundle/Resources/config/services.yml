@@ -1,0 +1,52 @@
+parameters:
+    cocoders_payroll.add_hourly_employee_controller.class: Cocoders\Bundle\PayrollBundle\Controller\AddHourlyEmployeeController
+    cocoders_payroll.add_hourly_employee_form_type.class: Cocoders\Bundle\PayrollBundle\Form\AddHourlyEmployeeType
+    cocoders_payroll.employee.class: Cocoders\Bundle\PayrollBundle\Entity\Employee
+    cocoders_payroll.repository.employee.class: Cocoders\Bundle\PayrollBundle\Entity\Repository\EmployeeRepository
+    cocoders_payroll.factory.employee.class: Cocoders\Bundle\PayrollBundle\Entity\EmployeeFactory
+    cocoders_payroll.factory.payment_classification.class: Cocoders\Bundle\PayrollBundle\Entity\PaymentClassificationFactory
+    cocoders_payroll.factory.payment_schedule.class: Cocoders\Bundle\PayrollBundle\Entity\PaymentScheduleFactory
+    cocoders_payroll.add_hourly_employee_use_case.class: UseCase\AddEmployee\AddHourlyEmployee
+
+services:
+    cocoders_payroll.add_hourly_employee_controller:
+        class: %cocoders_payroll.add_hourly_employee_controller.class%
+        arguments:
+            - @cocoders_payroll.add_hourly_employee_use_case
+            - @cocoders_payroll.add_hourly_employee_form
+            - @templating
+
+    cocoders_payroll.add_hourly_employee_form_type:
+        class: %cocoders_payroll.add_hourly_employee_form_type.class%
+
+    cocoders_payroll.add_hourly_employee_form:
+        class:           Symfony\Component\Form\FormInterface
+        factory_service: form.factory
+        factory_method:  createNamed
+        arguments:
+            - null
+            - @cocoders_payroll.add_hourly_employee_form_type
+
+    cocoders_payroll.repository.employee:
+        class:            %cocoders_payroll.repository.employee.class%
+        factory_service:  doctrine.orm.entity_manager
+        factory_method:   getRepository
+        arguments:
+            - %cocoders_payroll.employee.class%
+
+    cocoders_payroll.factory.employee:
+        class: %cocoders_payroll.factory.employee.class%
+
+    cocoders_payroll.factory.payment_classification:
+        class: %cocoders_payroll.factory.payment_classification.class%
+
+    cocoders_payroll.factory.payment_schedule:
+        class: %cocoders_payroll.factory.payment_schedule.class%
+
+    cocoders_payroll.add_hourly_employee_use_case:
+        class: %cocoders_payroll.add_hourly_employee_use_case.class%
+        arguments:
+            - @cocoders_payroll.factory.employee
+            - @cocoders_payroll.repository.employee
+            - @cocoders_payroll.factory.payment_classification
+            - @cocoders_payroll.factory.payment_schedule

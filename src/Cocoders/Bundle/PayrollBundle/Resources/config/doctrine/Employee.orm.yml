@@ -1,0 +1,14 @@
+Cocoders\Bundle\PayrollBundle\Entity\Employee:
+    type: entity
+    repositoryClass: Cocoders\Bundle\PayrollBundle\Entity\Repository\EmployeeRepository
+    table: employee
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        name:
+            type: string
+            length: 100
+        address:
+            type: text
