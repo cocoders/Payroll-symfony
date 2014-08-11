@@ -18,6 +18,8 @@
         "sensio/distribution-bundle": "~3.0",
         "sensio/framework-extra-bundle": "~3.0",
         "incenteev/composer-parameter-handler": "~2.0",
+        "friendsofsymfony/rest-bundle": "1.4.*@dev",
+        "jms/serializer-bundle": "0.13.*@dev",
         "cocoders/payroll": "dev-master"
     },
     "require-dev": {

@@ -1,0 +1,3 @@
+cocoders_api_payroll_add_hourly_employee:
+    type: rest
+    resource: cocoders_api_payroll.add_hourly_employee.controller

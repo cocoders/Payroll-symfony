@@ -1,0 +1,30 @@
+parameters:
+    cocoders_api_payroll.add_hourly_employee.controller.class: Cocoders\Bundle\ApiPayrollBundle\Controller\AddHourlyEmployeeController
+    cocoders_api_payroll.add_hourly_employee.param_converter.class: Cocoders\Bundle\ApiPayrollBundle\Request\AddHourlyEmployeeParamConverter
+    cocoders_payroll.add_hourly_employee_api_responder.class: Cocoders\Bundle\ApiPayrollBundle\Responder\AddHourlyEmployeeResponder
+
+services:
+    cocoders_api_payroll.add_hourly_employee.controller:
+        class: %cocoders_api_payroll.add_hourly_employee.controller.class%
+        arguments: [@cocoders_payroll.add_hourly_employee_use_case_api]
+
+    cocoders_api_payroll.add_hourly_employee.param_converter:
+        class: %cocoders_api_payroll.add_hourly_employee.param_converter.class%
+        tags:
+            - { name: request.param_converter, priority: -2, converter: my_converter }
+
+
+    cocoders_payroll.add_hourly_employee_use_case_api:
+        class: %cocoders_payroll.add_hourly_employee_use_case.class%
+        arguments:
+            - @cocoders_payroll.factory.employee
+            - @cocoders_payroll.repository.employee
+            - @cocoders_payroll.factory.payment_classification
+            - @cocoders_payroll.factory.payment_schedule
+        calls:
+            - [addResponder, ["@cocoders_payroll.add_hourly_employee_api_responder"]]
+
+    cocoders_payroll.add_hourly_employee_api_responder:
+        class: %cocoders_payroll.add_hourly_employee_api_responder.class%
+        arguments:
+            - @fos_rest.view_handler
